@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for the markdown module.
  */
 
+use Michelf\MarkdownExtra;
+
 /**
  * Implements hook_requirements().
  */
@@ -12,18 +14,14 @@ function markdown_requirements($phase) {
   $requirements = array();
 
   if ($phase == 'runtime') {
-    $library = libraries_detect('php-markdown');
-    $error_message = isset($library['error message']) ? $library['error message'] : '';
-
-    if (empty($library['installed'])) {
+    if (!class_exists('Michelf\\MarkdownExtra')) {
       $requirements['php_markdown_lib'] = array(
         'title' => t('Markdown library'),
         'value' => t('Not found'),
         'severity' => REQUIREMENT_ERROR,
-        'description' => t('!error You need to download the <a href="!markdown_link">PHP Markdown Lib</a>, extract the archive and place the directory in the %path directory on your server.', array(
-          '!error' => $error_message,
-          '!markdown_link' => $library['download url'],
-          '%path' => 'libraries',
+        'description' => t('Use <a href="@composer_link">Composer</a> to download this module\'s PHP dependencies. <a href="@composer_manager_link">Composer Manager</a> is recommended.', array(
+          '@composer_link' => 'https://getcomposer.org',
+          '@composer_manager_link' => 'https://www.drupal.org/project/composer_manager',
         )),
       );
     }
@@ -31,7 +29,7 @@ function markdown_requirements($phase) {
       $requirements['php_markdown_lib'] = array(
         'title' => t('Markdown library'),
         'severity' => REQUIREMENT_OK,
-        'value' => $library['name'] . ' ' . $library['version'],
+        'value' => 'PHP Markdown Lib ' . MarkdownExtra::MARKDOWNLIB_VERSION,
       );
     }
   }

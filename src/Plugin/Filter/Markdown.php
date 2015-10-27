@@ -30,8 +30,6 @@ class Markdown extends FilterBase {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $library = libraries_detect('php-markdown');
-
     $form['markdown_wrapper'] = array(
       '#type' => 'fieldset',
       '#title' => $this->t('Markdown'),
@@ -40,7 +38,7 @@ class Markdown extends FilterBase {
       '#title' => $this->t('Version'),
       '#theme' => 'item_list',
       '#items' => array(
-        $library['name'] . ' ' . $library['version'],
+        'PHP Markdown Lib ' . MarkdownExtra::MARKDOWNLIB_VERSION,
       ),
     );
 
@@ -52,7 +50,6 @@ class Markdown extends FilterBase {
    */
   public function process($text, $langcode) {
     if (!empty($text)) {
-      libraries_load('php-markdown', 'markdown-extra');
       $text = MarkdownExtra::defaultTransform($text);
     }
 

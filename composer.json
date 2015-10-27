@@ -4,6 +4,8 @@
   "type": "drupal-module",
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
-  "require": { }
+  "require": {
+    "michelf/php-markdown": "~1.5.0"
+  }
 }
 
