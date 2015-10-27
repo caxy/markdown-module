@@ -26,6 +26,7 @@ class MarkdownHelp extends BlockBase {
     $build = array();
     $build['#title'] = t('Markdown filter tips');
     $build['#markup'] = $this->markdownHelpContent();
+    return $build;
   }
 
   protected function markdownHelpContent() {
